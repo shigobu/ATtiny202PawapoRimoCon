@@ -1,5 +1,6 @@
 #include "CH9329_Keyboard.h"
 
+// ボーレート設定値計算マクロ。最後の"+0.5"は、四捨五入させるため？？
 #define USART0_BAUD_RATE(BAUD_RATE) ((float)(F_CPU * 64 / (16 * (float)BAUD_RATE)) + 0.5)
 
 #define SW_OFF HIGH

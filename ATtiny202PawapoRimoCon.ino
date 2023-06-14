@@ -11,6 +11,7 @@ const int RIGHT_SW_PIN = PIN_PA2;
 const int SW_ON_THRESHOLD = 10;
 uint8_t reportData[KEY_REPORT_DATA_LENGTH] = {};
 
+// USART初期化
 void USART0_init(void) {
   PORTA.DIR &= ~PIN7_bm;
   PORTA.DIR |= PIN6_bm;
@@ -18,6 +19,7 @@ void USART0_init(void) {
   USART0.CTRLB |= USART_TXEN_bm;
 }
 
+// 一つの値送信
 void USART0_sendValue(uint8_t c) {
   while (!(USART0.STATUS & USART_DREIF_bm)) {
     ;
@@ -25,12 +27,14 @@ void USART0_sendValue(uint8_t c) {
   USART0.TXDATAL = c;
 }
 
+// 複数の値送信
 void USART0_sendValue(uint8_t* c, size_t length) {
   for (size_t i = 0; i < length; i++ ) {
     USART0_sendValue(c[i]);
   }
 }
 
+// CH9329へキー押下情報送信
 void CH9329_write(uint8_t c){
     size_t length = 0;
     CH9329_Keyboard.press(c);
@@ -58,7 +62,7 @@ void loop() {
     rightCount++;
     delay(1);
     if (rightCount > SW_ON_THRESHOLD){
-      CH9329_write(KEY_RIGHT_ARROW);
+      CH9329_write(KEY_RIGHT_ARROW);      //右矢印キー
       while (digitalRead(RIGHT_SW_PIN) == SW_ON);
     }
   }
@@ -68,7 +72,7 @@ void loop() {
     leftCount++;
     delay(1);
     if (leftCount > SW_ON_THRESHOLD){
-      CH9329_write(KEY_LEFT_ARROW);
+      CH9329_write(KEY_LEFT_ARROW);      //左矢印キー
       while (digitalRead(LEFT_SW_PIN) == SW_ON);
     }
   }

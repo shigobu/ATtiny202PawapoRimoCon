@@ -62,8 +62,9 @@ void loop() {
     rightCount++;
     delay(1);
     if (rightCount > SW_ON_THRESHOLD){
-      CH9329_write(KEY_RIGHT_ARROW);      //右矢印キー
+      CH9329_write(KEY_RIGHT_ARROW);
       while (digitalRead(RIGHT_SW_PIN) == SW_ON);
+      break;
     }
   }
 
@@ -72,8 +73,9 @@ void loop() {
     leftCount++;
     delay(1);
     if (leftCount > SW_ON_THRESHOLD){
-      CH9329_write(KEY_LEFT_ARROW);      //左矢印キー
+      CH9329_write(KEY_LEFT_ARROW);
       while (digitalRead(LEFT_SW_PIN) == SW_ON);
+      break;
     }
   }
 }
